@@ -1,5 +1,6 @@
 package com.example.layoutapplication
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -76,28 +77,37 @@ class MainActivity : AppCompatActivity() {
 
             } else { val totalTable: Float = totalTableTemp.toString().toFloat()
                 val nPeople: Int = numOfPeopleSelected
-
                 val totalTemp = totalTable / nPeople
                 val tips = totalTemp * percentage / 100
                 val totalWithTips = totalTemp + tips
-                binding.tvResult.text = "Total with tips: $totalWithTips"
+
+                val intent = Intent(this, SummaryActivity::class.java)
+                intent.apply {
+                    putExtra("totalTable", totalTable)
+                    putExtra("numPeople", numOfPeopleSelected)
+                    putExtra("percentage", percentage)
+                    putExtra("totalAmount", totalWithTips)
+
+                    println("Roque1" + totalWithTips)
+                }
+                clean()
+                startActivity(intent)
 
             }
 
             binding.btnClean.setOnClickListener{
-                binding.tvResult.text = " "
-                binding.tieTotal.setText(" ")
-                binding.optionThree.isChecked = false
-                binding.rbOptionTwo.isChecked = false
-                binding.rbOptionOne.isChecked = false
+               clean()
 
 
             }
 
 
-
-
-
         }
+    }
+    private fun clean(){
+        binding.tieTotal.setText(" ")
+        binding.optionThree.isChecked = false
+        binding.rbOptionTwo.isChecked = false
+        binding.rbOptionOne.isChecked = false
     }
 }
